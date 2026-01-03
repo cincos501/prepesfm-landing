@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, 
   Target, 
@@ -17,6 +17,12 @@ import {
   Twitter,
   Instagram
 } from 'lucide-react';
+
+// Importa tus imágenes desde la carpeta assets
+import screen1 from './assets/captura-inicio.png';
+import screen2 from './assets/captura-examen.png';
+import screen3 from './assets/captura-resultados.png';
+import screen4 from './assets/captura-stats.png';
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,10 +52,10 @@ const App = () => {
   ];
 
   const screenshots = [
-    { id: 1, alt: "Pantalla de inicio" },
-    { id: 2, alt: "Simulacro en curso" },
-    { id: 3, alt: "Resultados detallados" },
-    { id: 4, alt: "Estadísticas" }
+    { id: 1, alt: "Pantalla de inicio", image: screen1 },
+    { id: 2, alt: "Simulacro en curso", image: screen2 },
+    { id: 3, alt: "Resultados detallados", image: screen3 },
+    { id: 4, alt: "Estadísticas", image: screen4 }
   ];
 
   const scrollToSection = (id: string) => {
@@ -67,7 +73,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 4000);
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -77,73 +83,43 @@ const App = () => {
       <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-md z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => scrollToSection('inicio')}>
               <div className="w-10 h-10 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg flex items-center justify-center">
                 <Award className="w-6 h-6 text-yellow-400" />
               </div>
               <span className="text-2xl font-bold text-[#133c6d]">PrepESFM</span>
             </div>
 
-            {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
-              <button onClick={() => scrollToSection('inicio')} className="text-gray-700 hover:text-[#133c6d] transition">
-                Inicio
-              </button>
-              <button onClick={() => scrollToSection('caracteristicas')} className="text-gray-700 hover:text-[#133c6d] transition">
-                Características
-              </button>
-              <button onClick={() => scrollToSection('capturas')} className="text-gray-700 hover:text-[#133c6d] transition">
-                Capturas
-              </button>
-              <button onClick={() => scrollToSection('privacidad')} className="text-gray-700 hover:text-[#133c6d] transition">
-                Privacidad
-              </button>
+              <button onClick={() => scrollToSection('inicio')} className="text-gray-700 hover:text-[#133c6d] font-medium transition">Inicio</button>
+              <button onClick={() => scrollToSection('caracteristicas')} className="text-gray-700 hover:text-[#133c6d] font-medium transition">Características</button>
+              <button onClick={() => scrollToSection('capturas')} className="text-gray-700 hover:text-[#133c6d] font-medium transition">Capturas</button>
+              <button onClick={() => scrollToSection('privacidad')} className="text-gray-700 hover:text-[#133c6d] font-medium transition">Privacidad</button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
+            <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-white border-t"
-          >
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="md:hidden bg-white border-t">
             <div className="px-4 py-4 space-y-3">
-              <button onClick={() => scrollToSection('inicio')} className="block w-full text-left py-2 text-gray-700">
-                Inicio
-              </button>
-              <button onClick={() => scrollToSection('caracteristicas')} className="block w-full text-left py-2 text-gray-700">
-                Características
-              </button>
-              <button onClick={() => scrollToSection('capturas')} className="block w-full text-left py-2 text-gray-700">
-                Capturas
-              </button>
-              <button onClick={() => scrollToSection('privacidad')} className="block w-full text-left py-2 text-gray-700">
-                Privacidad
-              </button>
+              <button onClick={() => scrollToSection('inicio')} className="block w-full text-left py-2 text-gray-700">Inicio</button>
+              <button onClick={() => scrollToSection('caracteristicas')} className="block w-full text-left py-2 text-gray-700">Características</button>
+              <button onClick={() => scrollToSection('capturas')} className="block w-full text-left py-2 text-gray-700">Capturas</button>
+              <button onClick={() => scrollToSection('privacidad')} className="block w-full text-left py-2 text-gray-700">Privacidad</button>
             </div>
           </motion.div>
         )}
       </nav>
 
       {/* Hero Section */}
-      <section id="inicio" className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <section id="inicio" className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
               <h1 className="text-5xl md:text-6xl font-bold text-[#133c6d] leading-tight mb-6">
                 Domina tu ingreso a la ESFM
               </h1>
@@ -151,32 +127,36 @@ const App = () => {
                 Prepárate con simulacros reales, analiza tu rendimiento y alcanza tu meta de convertirte en docente. La preparación inteligente empieza aquí.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="flex items-center justify-center space-x-2 bg-black text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition">
+                <button className="flex items-center justify-center space-x-2 bg-black text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition shadow-lg">
                   <Download className="w-5 h-5" />
                   <span className="font-semibold">Google Play</span>
                 </button>
-                <button className="flex items-center justify-center space-x-2 bg-[#133c6d] text-white px-8 py-4 rounded-xl hover:bg-blue-800 transition">
+                <button className="flex items-center justify-center space-x-2 bg-[#133c6d] text-white px-8 py-4 rounded-xl hover:bg-blue-800 transition shadow-lg">
                   <Download className="w-5 h-5" />
                   <span className="font-semibold">App Store</span>
                 </button>
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }} 
+              animate={{ opacity: 1, scale: 1 }} 
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
+              className="relative flex justify-center"
             >
-              <div className="bg-gradient-to-br from-blue-900 to-blue-700 rounded-3xl p-8 shadow-2xl">
-                <div className="bg-white rounded-2xl aspect-[9/16] max-w-sm mx-auto flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Award className="w-24 h-24 mx-auto text-yellow-500 mb-4" />
-                    <p className="text-gray-500">App Mockup</p>
-                  </div>
+              {/* Marco del dispositivo */}
+              <div className="relative z-10 bg-slate-900 rounded-[3rem] p-3 shadow-2xl border-[8px] border-slate-800 w-[300px] md:w-[350px]">
+                <div className="bg-white rounded-[2rem] overflow-hidden aspect-[9/19.5]">
+                  <img src={screen1} alt="App Preview" className="w-full h-full object-cover" />
                 </div>
+                {/* Notch simulado */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-3xl"></div>
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-yellow-400 rounded-full w-24 h-24 flex items-center justify-center shadow-lg">
+              
+              {/* Círculo decorativo de fondo */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-blue-100 rounded-full blur-3xl -z-10"></div>
+              
+              <div className="absolute -bottom-4 -right-4 bg-yellow-400 rounded-full w-24 h-24 flex items-center justify-center shadow-lg border-4 border-white z-20">
                 <span className="text-3xl font-bold text-[#133c6d]">100%</span>
               </div>
             </motion.div>
@@ -185,41 +165,23 @@ const App = () => {
       </section>
 
       {/* Features Section */}
-      <section id="caracteristicas" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
+      <section id="caracteristicas" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-[#133c6d] mb-4">
-              Características Principales
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Herramientas diseñadas para maximizar tu preparación y rendimiento
-            </p>
-          </motion.div>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#133c6d] mb-4">Características Principales</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Herramientas diseñadas para maximizar tu preparación</p>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
+              <motion.div 
+                key={index} 
+                whileHover={{ y: -10 }}
+                className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 transition-all"
               >
-                <div className="text-yellow-500 mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-[#133c6d] mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
+                <div className="text-yellow-500 mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-[#133c6d] mb-3">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -229,203 +191,110 @@ const App = () => {
       {/* Screenshots Section */}
       <section id="capturas" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-[#133c6d] mb-4">
-              Conoce la Aplicación
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Una interfaz intuitiva diseñada para tu éxito
-            </p>
-          </motion.div>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#133c6d] mb-4">Conoce la Interfaz</h2>
+            <p className="text-xl text-gray-600">Fluida, intuitiva y enfocada en tu aprendizaje</p>
+          </div>
 
-          <div className="relative max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-blue-900 to-blue-700 rounded-3xl p-8 shadow-2xl">
-              <div className="bg-white rounded-2xl aspect-[9/16] max-w-sm mx-auto flex items-center justify-center">
-                <div className="text-center p-8">
-                  <p className="text-gray-500 mb-2">{screenshots[currentSlide].alt}</p>
-                  <p className="text-sm text-gray-400">Captura {currentSlide + 1} de {screenshots.length}</p>
-                </div>
+          <div className="relative max-w-5xl mx-auto flex items-center justify-center">
+            <button onClick={prevSlide} className="absolute left-0 md:-left-12 z-30 bg-white rounded-full p-4 shadow-xl hover:bg-slate-50 transition">
+              <ChevronLeft className="w-8 h-8 text-[#133c6d]" />
+            </button>
+
+            <div className="relative w-[280px] md:w-[320px] bg-slate-900 rounded-[3rem] p-2 shadow-2xl border-[6px] border-slate-800">
+              <div className="bg-white rounded-[2.5rem] overflow-hidden aspect-[9/19.5] relative">
+                <AnimatePresence mode='wait'>
+                  <motion.img
+                    key={currentSlide}
+                    src={screenshots[currentSlide].image}
+                    alt={screenshots[currentSlide].alt}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-full h-full object-cover"
+                  />
+                </AnimatePresence>
               </div>
             </div>
 
-            <button
-              onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition"
-            >
-              <ChevronLeft className="w-6 h-6 text-[#133c6d]" />
+            <button onClick={nextSlide} className="absolute right-0 md:-right-12 z-30 bg-white rounded-full p-4 shadow-xl hover:bg-slate-50 transition">
+              <ChevronRight className="w-8 h-8 text-[#133c6d]" />
             </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition"
-            >
-              <ChevronRight className="w-6 h-6 text-[#133c6d]" />
-            </button>
-
-            <div className="flex justify-center mt-6 space-x-2">
-              {screenshots.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full transition ${
-                    currentSlide === index ? 'bg-[#133c6d]' : 'bg-gray-300'
-                  }`}
-                />
-              ))}
-            </div>
+          </div>
+          
+          <div className="flex justify-center mt-10 space-x-3">
+            {screenshots.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`h-2 transition-all rounded-full ${currentSlide === index ? 'w-8 bg-[#133c6d]' : 'w-2 bg-slate-300'}`}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Privacy Policy Section */}
-      <section id="privacidad" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+      {/* Privacy Policy */}
+      <section id="privacidad" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex items-center justify-center mb-8">
-              <Shield className="w-12 h-12 text-[#133c6d] mr-4" />
-              <h2 className="text-4xl md:text-5xl font-bold text-[#133c6d]">
-                Política de Privacidad
-              </h2>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 space-y-6 text-gray-700 leading-relaxed">
-              <div>
-                <h3 className="text-2xl font-bold text-[#133c6d] mb-3">1. Recopilación de Datos</h3>
-                <p>
-                  En PrepESFM nos tomamos muy en serio tu privacidad. Recopilamos únicamente la información necesaria para brindarte una experiencia personalizada y mejorar nuestros servicios. Los datos que podemos recopilar incluyen información de registro, historial de simulacros y preferencias de estudio.
-                </p>
-                <p className="mt-3 font-semibold text-[#133c6d]">
-                  Compromiso: Nunca vendemos, alquilamos ni compartimos tus datos personales con terceros con fines comerciales.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-[#133c6d] mb-3">2. Uso de Datos</h3>
-                <p>
-                  La información recopilada se utiliza exclusivamente para proporcionar y mejorar los servicios de PrepESFM, incluyendo el análisis de tu rendimiento, la personalización de simulacros y la generación de estadísticas de progreso.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-[#133c6d] mb-3">3. Google AdMob</h3>
-                <p>
-                  PrepESFM utiliza Google AdMob para mostrar anuncios publicitarios que nos permiten ofrecer la aplicación de forma gratuita. AdMob puede recopilar cierta información del dispositivo para personalizar los anuncios, incluyendo identificadores publicitarios y datos de uso.
-                </p>
-                <p className="mt-3">
-                  Puedes obtener más información sobre las prácticas de privacidad de Google AdMob en su política de privacidad: <a href="https://policies.google.com/privacy" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a>
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-[#133c6d] mb-3">4. Tus Derechos</h3>
-                <p>Como usuario de PrepESFM, tienes derecho a:</p>
-                <ul className="mt-3 space-y-2 ml-6">
-                  <li className="flex items-start">
-                    <span className="text-yellow-500 mr-2">•</span>
-                    <span>Acceder a tus datos personales almacenados en la aplicación</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-yellow-500 mr-2">•</span>
-                    <span>Solicitar la corrección de información incorrecta</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-yellow-500 mr-2">•</span>
-                    <span>Solicitar la eliminación de tu cuenta y datos asociados</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-yellow-500 mr-2">•</span>
-                    <span>Optar por no recibir anuncios personalizados</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-[#133c6d] mb-3">5. Seguridad</h3>
-                <p>
-                  Implementamos medidas de seguridad técnicas y organizativas para proteger tus datos contra acceso no autorizado, pérdida o alteración. Sin embargo, ningún sistema de transmisión por internet es completamente seguro.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-[#133c6d] mb-3">6. Cambios en la Política</h3>
-                <p>
-                  Nos reservamos el derecho de actualizar esta política de privacidad ocasionalmente. Te notificaremos sobre cambios significativos mediante la aplicación o por correo electrónico.
-                </p>
-              </div>
-
-              <div className="bg-blue-50 p-6 rounded-xl border-l-4 border-[#133c6d]">
-                <p className="font-semibold text-[#133c6d] mb-2">Contacto</p>
-                <p>
-                  Si tienes preguntas sobre nuestra política de privacidad o deseas ejercer tus derechos, contáctanos a través de los canales oficiales en el pie de página.
-                </p>
-              </div>
-
-              <p className="text-sm text-gray-500 italic text-center mt-8">
-                Última actualización: Enero 2026
-              </p>
-            </div>
-          </motion.div>
+          <div className="flex flex-col items-center mb-12">
+            <Shield className="w-16 h-16 text-[#133c6d] mb-4" />
+            <h2 className="text-4xl font-bold text-[#133c6d]">Política de Privacidad</h2>
+          </div>
+          <div className="bg-white rounded-3xl shadow-sm p-8 md:p-12 space-y-8 text-gray-700">
+             <div className="border-l-4 border-yellow-400 pl-6">
+                <h3 className="text-xl font-bold text-[#133c6d] mb-2">Compromiso de Seguridad</h3>
+                <p>En PrepESFM no vendemos tus datos. Utilizamos la información solo para mejorar tu experiencia de estudio.</p>
+             </div>
+             <div>
+                <h4 className="font-bold text-[#133c6d] mb-2 text-lg">1. Google AdMob</h4>
+                <p>Usamos AdMob para mantener la app gratuita. Google puede usar identificadores de dispositivo para mostrarte anuncios relevantes.</p>
+             </div>
+             <div>
+                <h4 className="font-bold text-[#133c6d] mb-2 text-lg">2. Tus Derechos</h4>
+                <p>Puedes solicitar la eliminación de tu cuenta y todos tus datos de progreso en cualquier momento escribiéndonos al soporte.</p>
+             </div>
+             <p className="text-sm text-gray-400 text-center pt-4 border-t">Última actualización: Enero 2026</p>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#133c6d] text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-lg flex items-center justify-center">
-                  <Award className="w-6 h-6 text-[#133c6d]" />
-                </div>
-                <span className="text-2xl font-bold">PrepESFM</span>
-              </div>
-              <p className="text-blue-200">
-                Tu aliado en el camino hacia la excelencia docente
-              </p>
+      <footer className="bg-[#133c6d] text-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
+          <div>
+            <div className="flex items-center space-x-3 mb-6">
+              <Award className="w-8 h-8 text-yellow-400" />
+              <span className="text-2xl font-bold">PrepESFM</span>
             </div>
-
-            <div>
-              <h4 className="text-lg font-bold mb-4">Enlaces Rápidos</h4>
-              <ul className="space-y-2 text-blue-200">
-                <li><button onClick={() => scrollToSection('inicio')} className="hover:text-yellow-400 transition">Inicio</button></li>
-                <li><button onClick={() => scrollToSection('caracteristicas')} className="hover:text-yellow-400 transition">Características</button></li>
-                <li><button onClick={() => scrollToSection('privacidad')} className="hover:text-yellow-400 transition">Privacidad</button></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-bold mb-4">Contáctanos</h4>
-              <div className="space-y-3">
-                <a href="mailto:contacto@prepesfm.com" className="flex items-center space-x-2 text-blue-200 hover:text-yellow-400 transition">
-                  <Mail className="w-5 h-5" />
-                  <span>contacto@prepesfm.com</span>
-                </a>
-                <div className="flex space-x-4 pt-2">
-                  <a href="#" className="hover:text-yellow-400 transition">
-                    <Facebook className="w-6 h-6" />
-                  </a>
-                  <a href="#" className="hover:text-yellow-400 transition">
-                    <Twitter className="w-6 h-6" />
-                  </a>
-                  <a href="#" className="hover:text-yellow-400 transition">
-                    <Instagram className="w-6 h-6" />
-                  </a>
-                </div>
+            <p className="text-blue-200">Tu aliado estratégico para el ingreso a las Escuelas Superiores de Formación de Maestros.</p>
+          </div>
+          <div>
+            <h4 className="text-lg font-bold mb-6">Explorar</h4>
+            <ul className="space-y-4 text-blue-100">
+              <li><button onClick={() => scrollToSection('inicio')} className="hover:text-yellow-400 transition">Inicio</button></li>
+              <li><button onClick={() => scrollToSection('caracteristicas')} className="hover:text-yellow-400 transition">Características</button></li>
+              <li><button onClick={() => scrollToSection('capturas')} className="hover:text-yellow-400 transition">Capturas</button></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-lg font-bold mb-6">Contacto</h4>
+            <div className="flex flex-col space-y-4">
+              <a href="mailto:contacto@prepesfm.com" className="flex items-center space-x-3 text-blue-100 hover:text-yellow-400">
+                <Mail className="w-5 h-5" />
+                <span>contacto@prepesfm.com</span>
+              </a>
+              <div className="flex space-x-5 pt-4">
+                <Facebook className="w-6 h-6 cursor-pointer hover:text-yellow-400" />
+                <Twitter className="w-6 h-6 cursor-pointer hover:text-yellow-400" />
+                <Instagram className="w-6 h-6 cursor-pointer hover:text-yellow-400" />
               </div>
             </div>
           </div>
-
-          <div className="border-t border-blue-800 pt-8 text-center text-blue-200">
-            <p>&copy; 2026 PrepESFM. Todos los derechos reservados.</p>
-          </div>
+        </div>
+        <div className="max-w-7xl mx-auto border-t border-blue-800 mt-12 pt-8 text-center text-blue-300 text-sm">
+          <p>&copy; 2026 PrepESFM. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>
